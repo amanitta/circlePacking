@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
     ani = animation.ArtistAnimation(fig, ims, interval=500, blit=True, repeat_delay=1000)
 
-    ani.save("cpack_01.gif")
+    ani.save("cpack_01.gif", writer='imagemagick') # save as .gif
 
     # show animation
     plt.show()

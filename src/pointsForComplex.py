@@ -93,5 +93,6 @@ if __name__ == "__main__":
             print(neighbours[i][j], end=' ')
         print()
 
-    plt.show()
     plt.savefig('../complex.jpg')
+
+    plt.show()

@@ -32,5 +32,5 @@ _cpack_debug.py_ is extremely useful for debugging the program and understanding
 </p>
 Just as before, we can then produce an animation showing the action of the packing algorithm, now with an input (the complex) that has not to be hard-coded anywhere.
 ```
-python ./src/pointsForComplex.py 20 25 987 | ./bin/cpack_final | python ./src/cpack.py
+ python ./src/pointsForComplex.py 9 8 30 | ./bin/cpack_final | python ./src/cpack_debug.py 
 ```

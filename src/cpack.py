@@ -47,8 +47,8 @@ if __name__ == "__main__":
     fig = plt.figure()
     ax = fig.gca()
     ax.axis('equal') # forces same n. of pixels along different axes
-    ax.set_xlim(-20, 20)
-    ax.set_ylim(-20, 20)
+    ax.set_xlim(-30, 30)
+    ax.set_ylim(-30, 30)
     ax.set_xticks([])
     ax.set_yticks([])
 
@@ -165,7 +165,7 @@ if __name__ == "__main__":
 
     ani = animation.ArtistAnimation(fig, ims, interval=500, blit=True, repeat_delay=1000)
 
-    ani.save("cpack_01.gif", writer='imagemagick') # save as .gif
+    # ani.save("./cpack_final.gif", writer='imagemagick') # save as .gif
 
     # show animation
     plt.show()

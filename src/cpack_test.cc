@@ -5,9 +5,6 @@
 
 using namespace std;
 
-// DIFFERENCES wrt cpack_01.cc:
-// boundary conditions are here chosen randomly
-
 // first of all we have to describe the complex K
 
 const int interior = 9; // n. of interior vertices

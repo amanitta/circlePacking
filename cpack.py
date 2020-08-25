@@ -63,23 +63,54 @@ if __name__ == "__main__":
         ims[call].append(title)
 
         already_drawn = list()
-        centers = [[] for i in range(BOUNDARY + INTERIOR)] # position of the centers of the internal vertices
-        centers[BOUNDARY].append([0, 0]) # the first circle is always centered at the origin
+        centers = [[0, 0] for i in range(BOUNDARY + INTERIOR)] # position of the centers of the internal vertices
+        # intially all set as (0, 0)
 
         # progressive shifts will need to be taken into account
-        shifts = list()
-        for i in range(BOUNDARY):
-            shifts.append(-1)
-        shifts.append(0) # no shift for the first flower
+        shifts = [0 for i in range(BOUNDARY + INTERIOR)]  # initially set them all as 0
 
         # defining color map (helpful in debugging)
         cmap = mpl.cm.Paired
         color = 0
 
-        for vertex in range(BOUNDARY, INTERIOR + BOUNDARY): # loop on the flowers
+        to_draw = [x for x in range(BOUNDARY, BOUNDARY + INTERIOR)] # list of the interior vertices
+        # exluding the first one cause it will always be drawn as first
+        vertices = list()
+        vertex = BOUNDARY
+
+        l = 0
+        while len(vertices) < INTERIOR: # loop on the flowers
+            # print(vertex)
+            l += 1
+            prev = 0
+            # finding the current center among the petals of one of the previous flowers, if it is not present, skip
+            # to the next one
+            flag = False
+
+            # special case for the first circle to draw
+            if (vertex == BOUNDARY) & (vertex not in vertices):
+                vertices.append(vertex)
+            else:
+                for v in vertices:
+                    if (vertex in neigh[v]) & (vertex not in vertices):
+                        vertices.append(vertex)
+                        # print("vertices: ", vertices)
+                        flag = True  # the vertex was found among the neighbours
+                        prev = v
+                        my_circ = neigh[v].index(vertex)
+                        break
+
+                if not flag:
+                    # print("VERTEX NOT FOUND among the neighbours of the circles already constructed\n"
+                    #       "or ALREADY PRINTED")
+                    l = l % INTERIOR # go to the next vertex to draw
+                    # not the most efficient method...
+                    vertex = to_draw[l]
+                    continue
+
             # CENTRAL CIRCLE
-            xc = centers[vertex][0][0] # second index always 0 for how I defined the centers.. wanted to keep ordering
-            yc = centers[vertex][0][1]
+            xc = centers[vertex][0] # first index always 0 for how I defined the centers.. wanted to keep ordering
+            yc = centers[vertex][1]
             r = radii[vertex][call] # central radius
             cent = ax.scatter(xc, yc, color='r', s=2, animated=True)
             # appending centers to the animation
@@ -93,26 +124,24 @@ if __name__ == "__main__":
             # PETALS
             shift = 0 # to orientate the circles in a consistent manner
             if vertex > BOUNDARY:
-                # finding the current center among the petals of the previous flower
-                my_circ = neigh[vertex - 1].index(vertex)
                 # now I consider the petal before it and I find it in the current flower
-                my_shift = neigh[vertex].index(neigh[vertex - 1][my_circ - 1])
+                my_shift = neigh[vertex].index(neigh[prev][my_circ - 1])
                 # shift due to the fact the circle I'm considering could not be the first
                 # among the neighbours of the current vertex --> as if I were placing it in first position
                 shift0 = -(partial[vertex][call][my_shift - 1])
                 shift += shift0
                 # shift due to the fact the actual circle could be shifted more with respect to the first position
                 # (which in the end should be at 360 = 0 deg)
-                a = radii[vertex - 1][call] + radii[neigh[vertex][my_shift]][call]
-                b = r + radii[vertex - 1][call]
+                a = radii[prev][call] + radii[neigh[vertex][my_shift]][call]
+                b = r + radii[prev][call]
                 c = r + radii[neigh[vertex][my_shift]][call]
                 ang1 = np.rad2deg(np.arccos((b ** 2 + c ** 2 - a ** 2) / (2 * b * c)))
-                ang2 = 180 - (partial[vertex - 1][call][my_circ - 1] + shifts[vertex - 1])
+                ang2 = 180 - (partial[prev][call][my_circ - 1] + shifts[prev])
                 # '+ shifts[]' due to the fact the previous center has been rotated itself, so the angle sum should
                 # be adjusted considered this
                 shift1 = (ang1 - ang2)
                 shift += shift1
-                shifts.append(shift)
+                shifts[vertex] = shift
 
             for i in range(len(neigh[vertex])): # loop on the circles composing the petals
                 n_circ = neigh[vertex][i] # index of the circle I am considering
@@ -121,7 +150,7 @@ if __name__ == "__main__":
                 if n_circ not in already_drawn:
                     xv = xc + (r + radii[n_circ][call]) * np.cos(np.deg2rad(alpha))
                     yv = yc + (r + radii[n_circ][call]) * np.sin(np.deg2rad(-alpha))
-                    centers[n_circ].append([xv, yv])
+                    centers[n_circ] = [xv, yv]
                     circle = plt.Circle((xv, yv), radii[n_circ][call], color=cmap(color), fill=False, animated=True)
                     already_drawn.append(n_circ)
                     # plt.scatter(xv, yv, color='r')
@@ -130,6 +159,9 @@ if __name__ == "__main__":
                     ims[call].append(ax.add_artist(circle))
 
             color += .1 # updating color map
+
+            l = l % INTERIOR # go to the next vertex to draw
+            vertex = to_draw[l]
 
     ani = animation.ArtistAnimation(fig, ims, interval=500, blit=True, repeat_delay=1000)
 

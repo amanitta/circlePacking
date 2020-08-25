@@ -186,6 +186,7 @@ if __name__ == "__main__":
         for i, val in enumerate(vertices):
             ax.annotate(i + BOUNDARY, (centers[i + BOUNDARY][0], centers[i + BOUNDARY][1]), size='8')
 
+    plt.savefig("../cpack_debug.jpg")
     plt.show()
 
 

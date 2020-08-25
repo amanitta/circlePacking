@@ -6,9 +6,6 @@
 
 using namespace std;
 
-// DIFFERENCES wrt cpack_01.cc:
-// boundary conditions are here chosen randomly
-
 // first of all we have to describe the complex K
 
 const double A = 360; // fixing same branching for all the points at this stage (functions will require values in radians)

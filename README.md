@@ -37,7 +37,7 @@ python ./src/pointsForComplex.py 20 25 987 | ./bin/cpack_final | python ./src/cp
 ```
 Complex             |  Circle Packing
 :-------------------------:|:-------------------------:
-<img src="https://github.com/amanitta/circlePacking/blob/master/complex_final.jpg" width=500 height=400/> | <img src="https://github.com/amanitta/circlePacking/blob/master/cpack_final.gif" width=500 height=400/>
+<img src="https://github.com/amanitta/circlePacking/blob/master/complex_final.jpg"/> | <img src="https://github.com/amanitta/circlePacking/blob/master/cpack_final.gif"/>
 
 
 

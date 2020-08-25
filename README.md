@@ -22,4 +22,8 @@ python pointsForComplex.py BOUNDARY INTERIOR [SEED]
   <img src="https://github.com/amanitta/circlePacking/blob/master/complex.jpg">
 </p>
 
-  
+The output of the python script just mentioned can then be fed to _cpack_final_, which reads the structure of the complex created and runs the circle packing algorithm.</br>
+_cpack_debug.py_ is extremely useful for debugging the program and understanding how the animation is created. It can also be used to show the final result of the run as shown below.
+```
+
+```

@@ -13,7 +13,7 @@ The program should be run like this:
 </p>
 It is possible to choose between fixed (default) and random boundary conditions using the options -f and -r in the executable.</br></br>
 
-The other python script provides instead a way to create a complex with a certain number of boundary and interior points. The geometrical form of the complex is not important at all: the only thing which is relevant is knowing the neighbouring nodes to which each interior vertex is connected. The script thus places the boundary points equally spaced on a circle, while the interior points are chosen at random inside the circle itself. A Delaunay triangulation is exploited to link the vertices inside the circle. The output of the script consists of the list of neighbours for each internal vertex, sorted in clockwise order.</br>
+The other python script (_pointsForComplex.py_) provides instead with a way to create a complex with a certain number of boundary and interior points. The geometrical form of the complex is not important at all: the only thing which is relevant is knowing the neighbouring nodes to which each interior vertex is connected. The script thus places the boundary points equally spaced on a circle, while the interior points are chosen at random inside the circle itself. A Delaunay triangulation is exploited to link the vertices inside the circle. The output of the script consists of the list of neighbours for each internal vertex, sorted in clockwise order.</br>
 The program should be run like this
 ```
 python pointsForComplex.py BOUNDARY INTERIOR [SEED]

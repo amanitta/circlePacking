@@ -6,6 +6,7 @@ from itertools import permutations
 import collections
 from clockwiseOrder import clockw_ad
 import time
+import sys
 
 def get_neighbours(triang, complex_points):
     _neighbors = defaultdict(set)  # set because I don't want repetitions
@@ -45,8 +46,10 @@ def get_neighbours(triang, complex_points):
     return neigh_list
 
 if __name__ == "__main__":
-    BOUNDARY = 15
-    INTERIOR = 20
+    BOUNDARY, INTERIOR = int(sys.argv[1]), int(sys.argv[2])
+    if len(sys.argv) == 4:
+        SEED = int(sys.argv[3])
+        np.random.seed(SEED)
 
     # boundary chosen as a circle
     fig = plt.figure()
@@ -59,7 +62,6 @@ if __name__ == "__main__":
     x_bound, y_bound = boundary_points.T
     internal_points = list()
     N = 0
-    np.random.seed(30)
     while N < INTERIOR:
         xi = np.random.uniform(-R, R)
         yi = np.random.uniform(-R, R)
@@ -91,4 +93,5 @@ if __name__ == "__main__":
             print(neighbours[i][j], end=' ')
         print()
 
-    # plt.show()
+    plt.show()
+    plt.savefig('../complex.jpg')
